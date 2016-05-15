@@ -3,13 +3,14 @@ package com.rapibanca.dao;
 // Generated 16/04/2016 01:23:11 PM by Hibernate Tools 3.4.0.CR1
 
 import com.rapibanca.entities.ClienteRapibanca;
+import com.rapibanca.session.SessionFactoryHibernate;
 import java.math.BigDecimal;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.hibernate.Query;
 import org.hibernate.Session;
-import com.rapibanca.session.SessionFactoryHibernate;
-import javax.persistence.Query;
+
 
 /**
  * Home object for domain model class ClienteRapibanca.
@@ -53,27 +54,32 @@ public class ClienteRapibancaDAO {
 		}
 	}
 
-	/*public ClienteRapibanca merge(ClienteRapibanca detachedInstance) {
-		log.debug("merging ClienteRapibanca instance");
+	public ClienteRapibanca findByIdUsuario(String idUsuario) {
+		
 		try {
-			ClienteRapibanca result = entityManager.merge(detachedInstance);
-			log.debug("merge successful");
-			return result;
+			session.getTransaction().begin();
+			Query query = (Query) session.getNamedQuery("ClienteRapibanca.findByIdUsuario");
+                        query.setParameter("numeroDocumento", idUsuario);
+			ClienteRapibanca clienteRapibanca = (ClienteRapibanca)query.uniqueResult();
+			session.clear();
+			
+			return clienteRapibanca;
 		} catch (RuntimeException re) {
-			log.error("merge failed", re);
+			
 			throw re;
 		}
-	}*/
+	}
 
 	public ClienteRapibanca findById(BigDecimal id) {
 		
 		try {
 			session.getTransaction().begin();
-			//Query query = (Query) session.getNamedQuery("findStockByStockCode").setBigDecimal(id);
-			session.getTransaction().commit();
+			Query query = (Query) session.getNamedQuery("ClienteRapibanca.findByNumeroDocumento");
+                        query.setParameter("numeroDocumento", id);
+			ClienteRapibanca clienteRapibanca = (ClienteRapibanca)query.uniqueResult();
 			session.clear();
 			
-			return null;
+			return clienteRapibanca;
 		} catch (RuntimeException re) {
 			
 			throw re;

@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author MaríaCamila
+ * @author Ccuella,Jmartine2319
  */
 @Entity
 @Table(name = "CLIENTE_RAPIBANCA")
