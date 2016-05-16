@@ -11,11 +11,14 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -38,8 +41,10 @@ public class TransaccionesRapibanca implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TRANSACCION_ID")
+    @SequenceGenerator(name = "TRANSACCION_ID", sequenceName = "TRANSACCION_SEQ",allocationSize=1)
     @Column(name = "ID_TRANSACCION")
-    private String idTransaccion;
+    private BigInteger idTransaccion;
     @Basic(optional = false)
     @Column(name = "FECHA_TRANSACCION")
     @Temporal(TemporalType.TIMESTAMP)
@@ -60,22 +65,22 @@ public class TransaccionesRapibanca implements Serializable {
     public TransaccionesRapibanca() {
     }
 
-    public TransaccionesRapibanca(String idTransaccion) {
+    public TransaccionesRapibanca(BigInteger idTransaccion) {
         this.idTransaccion = idTransaccion;
     }
 
-    public TransaccionesRapibanca(String idTransaccion, Date fechaTransaccion, BigInteger medioElectronico, BigInteger valorOperacion) {
+    public TransaccionesRapibanca(BigInteger idTransaccion, Date fechaTransaccion, BigInteger medioElectronico, BigInteger valorOperacion) {
         this.idTransaccion = idTransaccion;
         this.fechaTransaccion = fechaTransaccion;
         this.medioElectronico = medioElectronico;
         this.valorOperacion = valorOperacion;
     }
 
-    public String getIdTransaccion() {
+    public BigInteger getIdTransaccion() {
         return idTransaccion;
     }
 
-    public void setIdTransaccion(String idTransaccion) {
+    public void setIdTransaccion(BigInteger idTransaccion) {
         this.idTransaccion = idTransaccion;
     }
 
